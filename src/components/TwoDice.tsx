@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Button } from "react-bootstrap";
 
 /**
@@ -12,5 +12,25 @@ export function d6(): number {
 }
 
 export function TwoDice(): React.JSX.Element {
-    return <div>Two Dice</div>;
+    const [diceLeft, setDiceLeft] = useState<number>(4);
+    const [diceRight, setDiceRight] = useState<number>(2);
+
+    function rollLeft(): void {
+        setDiceLeft(d6);
+    }
+    function rollRight(): void {
+        setDiceRight(d6);
+    }
+    return (
+        <div>
+            <div>
+                <Button onClick={rollLeft}>Roll Left</Button>
+                <Button onClick={rollRight}>Roll Right</Button>
+            </div>
+            <span data-testid="left-die">{diceLeft}</span>
+            <span data-testid="right-die">{diceRight}</span>
+            {diceLeft === diceRight &&
+                (diceLeft === 1 ? <span>Lose</span> : <span>Win</span>)}
+        </div>
+    );
 }
